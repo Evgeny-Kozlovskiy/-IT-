@@ -45,33 +45,6 @@ conn.commit()
 cur.execute("""SELECT * from ordlog;""")
 rows = cur.fetchall()
 
-
-"""Проверка корректности записи данных в таблицу ordlog"""
-flag = False
-for i, record in enumerate(rows):
-    source = lines[i].split(',')
-    for j, elem in enumerate(record):
-        try:
-            float(source[j])
-        except Exception:
-            if elem != source[j]:
-                if source[j] == '':
-                    continue
-                flag = True
-                #print('str', elem, source[j])
-        else:
-            if '.' in source[j]:
-                if float(elem) != float(source[j]):
-                    flag = True
-                    #print('float', elem, source[j], elem == float(source[j]), type(elem), type(float(source[j])))
-            else:
-                if elem != int(source[j]):
-                    flag = True
-                    #print('int', elem, source[j], record, source)
-
-print('СОСТОЯНИЕ:  ', 'ОШИБОК НЕТ' if not flag else 'ЕСТЬ ОШИБКИ')
-
-
 """Разбивка исходной таблицы на 3 новых"""
 
 # тикеры с сайта биржи
